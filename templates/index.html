@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>VINFAST KHÁNH HUYỀN</title>
+
+    <style>
+
+        body {
+
+            background: url("/static/bg.jpg") no-repeat center center fixed;
+
+            background-size: cover;
+
+            font-family: Arial;
+
+        }
+
+        .box {
+
+            background: rgba(255,255,255,0.95);
+
+            width: 500px;
+
+            margin: 50px auto;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+        }
+
+        input, select {
+
+            width: 90%;
+
+            padding: 10px;
+
+            margin: 8px 0;
+
+            border-radius: 10px;
+
+            border: 1px solid #ccc;
+
+        }
+
+        button {
+
+            padding: 10px 20px;
+
+            border-radius: 10px;
+
+            border: none;
+
+            cursor: pointer;
+
+            margin: 5px;
+
+        }
+
+        .btn-save { background: #28a745; color: white; }
+
+        .btn-list { background: #007bff; color: white; }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h2>VINFAST KHÁNH HUYỀN</h2>
+
+
+
+    <form method="POST">
+
+        <input type="text" name="name" placeholder="Họ và Tên" required>
+
+        <input type="text" name="phone" placeholder="SĐT" required>
+
+        <input type="text" name="repair" placeholder="Thông tin sửa chữa" required>
+
+        <input type="text" name="total" placeholder="Thành tiền" required>
+
+
+
+        <select name="method">
+
+            <option value="CK">Chuyển khoản</option>
+
+            <option value="TM">Tiền mặt</option>
+
+        </select>
+
+
+
+        <button class="btn-save" type="submit">Lưu</button>
+
+        <a href="/list"><button class="btn-list" type="button">Xem danh sách</button></a>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

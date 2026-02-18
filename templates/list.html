@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Danh sách</title>
+
+    <style>
+
+        body { font-family: Arial; background:#f2f2f2; }
+
+        .box {
+
+            width: 90%;
+
+            margin: 40px auto;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+        th, td {
+
+            padding: 10px;
+
+            border: 1px solid #ddd;
+
+            text-align: center;
+
+        }
+
+        th { background: #007bff; color: white; }
+
+        .btn {
+
+            padding:8px 15px;
+
+            border:none;
+
+            border-radius:8px;
+
+            margin:5px;
+
+            cursor:pointer;
+
+        }
+
+        .export { background:#28a745;color:white; }
+
+        .back { background:#6c757d;color:white; }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+
+
+{% with messages = get_flashed_messages() %}
+
+  {% if messages %}
+
+    <div style="background:#4CAF50;color:white;padding:10px;border-radius:10px;margin-bottom:10px;text-align:center;">
+
+      {{ messages[0] }}
+
+    </div>
+
+  {% endif %}
+
+{% endwith %}
+
+
+
+<h3>Danh sách ngày {{ today }}</h3>
+
+
+
+<table>
+
+<tr>
+
+<th>Họ tên</th>
+
+<th>SĐT</th>
+
+<th>Sửa chữa</th>
+
+<th>Thành tiền</th>
+
+<th>CK/TM</th>
+
+</tr>
+
+
+
+{% for d in data %}
+
+<tr>
+
+<td>{{ d.name }}</td>
+
+<td>{{ d.phone }}</td>
+
+<td>{{ d.repair }}</td>
+
+<td>{{ d.total }}</td>
+
+<td>{{ d.method }}</td>
+
+</tr>
+
+{% endfor %}
+
+
+
+</table>
+
+
+
+<br>
+
+<a href="/export"><button class="btn export">Xuất Excel</button></a>
+
+<a href="/"><button class="btn back">Quay lại</button></a>
+
+
+
+</div>
+
+</body>
+
+</html>
