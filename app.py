@@ -6,6 +6,8 @@ from openpyxl import Workbook
 
 from io import BytesIO
 
+import os
+
 
 
 app = Flask(__name__)
@@ -14,7 +16,7 @@ app.secret_key = "vinfast_secret_key_2026"
 
 
 
-# Lưu dữ liệu trong RAM (mất khi server restart - phù hợp dùng trong ngày)
+# Lưu dữ liệu trong RAM (mất khi restart server - phù hợp dùng trong ngày)
 
 DATA = []
 
@@ -27,6 +29,12 @@ PASSWORD = "123456"
 
 
 
+
+# =========================
+
+# LOGIN
+
+# =========================
 
 @app.route("/login", methods=["GET", "POST"])
 
@@ -50,6 +58,12 @@ def login():
 
 
 
+# =========================
+
+# LOGOUT
+
+# =========================
+
 @app.route("/logout")
 
 def logout():
@@ -62,11 +76,17 @@ def logout():
 
 
 
+# =========================
+
+# TRANG CHÍNH - NHẬP DỮ LIỆU
+
+# =========================
+
 @app.route("/", methods=["GET", "POST"])
 
 def index():
 
-    if "logged_in" not in session:
+    if not session.get("logged_in"):
 
         return redirect(url_for("login"))
 
@@ -106,11 +126,17 @@ def index():
 
 
 
+# =========================
+
+# DANH SÁCH TRONG NGÀY
+
+# =========================
+
 @app.route("/list")
 
 def list_today():
 
-    if "logged_in" not in session:
+    if not session.get("logged_in"):
 
         return redirect(url_for("login"))
 
@@ -128,11 +154,17 @@ def list_today():
 
 
 
+# =========================
+
+# XUẤT EXCEL
+
+# =========================
+
 @app.route("/export")
 
 def export_excel():
 
-    if "logged_in" not in session:
+    if not session.get("logged_in"):
 
         return redirect(url_for("login"))
 
@@ -147,6 +179,10 @@ def export_excel():
     wb = Workbook()
 
     ws = wb.active
+
+    ws.title = "Báo cáo"
+
+
 
     ws.append(["Họ và Tên", "SĐT", "Thông tin sửa chữa", "Thành tiền", "CK/TM"])
 
@@ -168,11 +204,29 @@ def export_excel():
 
     filename = f"vinfast_{today}.xlsx"
 
-    return send_file(output, as_attachment=True, download_name=filename)
+
+
+    return send_file(
+
+        output,
+
+        as_attachment=True,
+
+        download_name=filename,
+
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
 
 
 
 
+
+# =========================
+
+# CHẠY SERVER
+
+# =========================
 
 if __name__ == "__main__":
 
