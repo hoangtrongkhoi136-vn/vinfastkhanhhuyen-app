@@ -12,6 +12,11 @@ import os
 
 app = Flask(__name__)
 
+@app.route("/")
+
+def health_check():
+
+    return "OK", 200
 app.secret_key = "vinfast_secret_key_2026"
 
 
