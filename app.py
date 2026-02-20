@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_file
 
-from datetime import datetime
+from datetime import datetime, timedelta
+
+from flask import session
 
 from openpyxl import Workbook
 
@@ -21,6 +23,39 @@ def health():
 
 
 app.secret_key = "vinfast_secret_key_2026"
+
+
+app.permanent_session_lifetime = timedelta(minutes=5)
+
+
+
+@app.before_request
+
+def check_timeout():
+
+    if session.get("logged_in"):
+
+        now = datetime.utcnow()
+
+        last_activity = session.get("last_activity")
+
+
+
+        if last_activity:
+
+            last_activity = datetime.strptime(last_activity, "%Y-%m-%d %H:%M:%S")
+
+            if now - last_activity > timedelta(minutes=5):
+
+                session.clear()
+
+                return redirect(url_for("login"))
+
+
+
+        session["last_activity"] = now.strftime("%Y-%m-%d %H:%M:%S")
+
+
 
 
 
@@ -53,7 +88,7 @@ def login():
         if request.form["username"] == USERNAME and request.form["password"] == PASSWORD:
 
             session["logged_in"] = True
-
+            session["last_activity"] = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
             return redirect(url_for("index"))
 
         else:
